@@ -34,6 +34,7 @@ message += `
   - Arquitetura = ${arquitetura}
   - Memória Total = ${memoriaTotal} GB
   - Memória Livre = ${memoriaLivre} GB
+  - Alterado para exemplificar o Dockerfile.child apenas com o FROM.
 `;
 
 app.get('/', (req, res) => {

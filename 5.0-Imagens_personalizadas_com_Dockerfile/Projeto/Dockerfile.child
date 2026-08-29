@@ -1,0 +1,10 @@
+FROM phsdeveloper/docker-node-base:latest
+
+# COPY package*.json ./
+# RUN npm install
+# COPY . .
+
+#-------------------------------
+# Principais comandos utilizados:
+# docker build -t phsdeveloper/docker-node-base:child -f Dockerfile.child . 
+# docker run --rm --name=appnode-child phsdeveloper/docker-node-base:child

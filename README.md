@@ -44,7 +44,7 @@ ENTRYPOINT [ "./server" ]
 > ### 🔹 Aula 05.11 — Labels na prática
 > **Branch:** `01_DockerNaPratica_05-ImagensPersonalizadasComDockerfile_11-LabelsNaPrqtica`  
 > **Início:** 28/06/2026 12:09
-> **Fim:**  28/06/2026 
+> **Fim:**  28/06/2026 13:10
 - Dockerfile Aula:
 
 ```
@@ -60,3 +60,8 @@ COPY . .
 RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o server main.go
 ENTRYPOINT [ "./server" ]
 ```
+
+> ### 🔹 Aula 05.11 — Labels na prática
+> **Branch:** `01_DockerNaPratica_05-ImagensPersonalizadasComDockerfile_12-ImagensBaseEFilhasComOnbuild`  
+> **Início:** 28/06/2026 13:20
+> **Fim:**  28/06/2026 

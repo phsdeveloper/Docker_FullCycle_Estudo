@@ -1,0 +1,16 @@
+ARG NODE_VERSION=20.11.0
+
+FROM node:${NODE_VERSION} 
+WORKDIR /app
+
+
+ONBUILD COPY package*.json ./
+ONBUILD RUN npm install
+ONBUILD COPY . .
+CMD ["node", "index.js"]
+
+#-------------------------------
+# Principais comandos utilizados:
+# docker build -t phsdeveloper/docker-node-base:latest -f Dockerfile.base . 
+# docker run --rm --name=appnode-base phsdeveloper/docker-node-base:latest
+
