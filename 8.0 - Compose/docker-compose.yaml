@@ -1,14 +1,27 @@
 services:
+#---------------------------------------------------------
   nodeapp:
-    build: ./mynode_network
+    build:
+      context: ./mynode_network
+      dockerfile: Dockerfile
 
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+    volumes:
+      - ./mynode_network:/app
+#---------------------------------------------------------
   nginx:
     image: nginx:latest
+
     ports:
       - "8080:80"
+      
     volumes:
       - ./nginx-html:/usr/share/nginx/html
-
+#---------------------------------------------------------
   mongo: 
     image: mongo:latest
   
+#---------------------------------------------------------
