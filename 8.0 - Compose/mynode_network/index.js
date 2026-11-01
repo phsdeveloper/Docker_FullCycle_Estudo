@@ -14,5 +14,8 @@ function formatDateTime(date = new Date()) {
 mongoose.connect('mongodb://mongo:27017/mydatabase')
     .then(() => { console.log(`[${formatDateTime()}] Connected to MongoDB`); })
     .catch(err => {
-        console.error(`[${formatDateTime()}] Error connecting to MongoDB`, err);
+        console.error("");
+        console.error(` - [${formatDateTime()}] Error connecting to MongoDB`);
+        console.error(`   - Message: [${err.message}]`);
+        console.error("");
     });
