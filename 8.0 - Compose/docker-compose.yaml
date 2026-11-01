@@ -5,6 +5,12 @@ services:
       context: ./mynode_network
       dockerfile: Dockerfile
 
+    environment:
+      - MY_VAR_01=123456_DEV
+
+    env_file:
+      - ./mynode_network/.env
+
     depends_on:
       mongo:
         condition: service_healthy
@@ -23,6 +29,11 @@ services:
   #----------------------------------------------------------------------------------------------
   mongo: 
     image: mongo:latest
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+
     healthcheck:
       #test: "exit 0"
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
@@ -33,7 +44,7 @@ services:
     volumes:
        - mongo-data:/data/db
        #- ./mongo-data:/data/db #Cria um diretório para persistência dos dados do MongoDB
-       
+
 #----------------------------------------------------------------------------------------------
 volumes:
   mongo-data:
