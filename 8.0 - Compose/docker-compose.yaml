@@ -7,6 +7,7 @@ services:
 
     environment:
       - MY_VAR_01=123456_DEV
+      - APP_Name=nodeapp
 
     env_file:
       - ./mynode_network/.env
@@ -24,7 +25,39 @@ services:
     
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      
+  #----------------------------------------------------------------------------------------------
+  nodeapp-watch:
+    build:
+      context: ./mynode_network
+      dockerfile: Dockerfile
+
+    environment:
+      - MY_VAR_01=123456_DEV
+      - APP_Name=nodeapp-watch
+
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+    develop:
+      watch:
+        - path: ./mynode_network 
+          target: /app #Diretório dentro do container onde o código será montado definido no Dockerfile
+          action: sync
+          ignore: 
+            - "./mynode_network/node_modules"
+
+        - path: ./mynode_network/package.json
+          action: rebuild
+
+        - path: ./mynode_network/index.js
+          target: /app/index.js
+          action: sync+restart
+
+    networks:
+      - backend
+      - db-net
+
   #----------------------------------------------------------------------------------------------
   nginx:
     image: nginx:latest

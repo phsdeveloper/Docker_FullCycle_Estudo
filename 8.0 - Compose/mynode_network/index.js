@@ -1,5 +1,6 @@
 //Aplicacao simples em nodeJS.
 const mongoose = require('mongoose');
+const appName = process.env.APP_Name;
 
 function formatDateTime(date = new Date()) {
     try {
@@ -12,10 +13,16 @@ function formatDateTime(date = new Date()) {
 }
 
 mongoose.connect('mongodb://mongo:27017/mydatabase')
-    .then(() => { console.log(`[${formatDateTime()}] Connected to MongoDB`); })
+    .then(() => {
+        console.log("");
+        console.log(` - Application Name: ${appName}`);
+        console.log(`   - [${formatDateTime()}] Connected to MongoDB successfully - Alterado.-,`);
+        console.log("");
+    })
     .catch(err => {
         console.error("");
-        console.error(` - [${formatDateTime()}] Error connecting to MongoDB`);
+        console.error(` - Application Name: ${appName}`);
+        console.error(`   - [${formatDateTime()}] Error connecting to MongoDB`);
         console.error(`   - Message: [${err.message}]`);
         console.error("");
     });
