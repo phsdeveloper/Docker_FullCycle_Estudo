@@ -41,6 +41,10 @@ services:
 
     develop:
       watch:
+        - path: ./mynode_network/index.js
+          target: /app/index.js
+          action: sync+restart
+          
         - path: ./mynode_network 
           target: /app #Diretório dentro do container onde o código será montado definido no Dockerfile
           action: sync
@@ -50,9 +54,6 @@ services:
         - path: ./mynode_network/package.json
           action: rebuild
 
-        - path: ./mynode_network/index.js
-          target: /app/index.js
-          action: sync+restart
 
     networks:
       - backend

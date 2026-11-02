@@ -16,7 +16,7 @@ mongoose.connect('mongodb://mongo:27017/mydatabase')
     .then(() => {
         console.log("");
         console.log(` - Application Name: ${appName}`);
-        console.log(`   - [${formatDateTime()}] Connected to MongoDB successfully - Alterado.-,`);
+        console.log(`   - [${formatDateTime()}] Connected to MongoDB successfully - Alterado.-,9`);
         console.log("");
     })
     .catch(err => {
