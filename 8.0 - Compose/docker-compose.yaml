@@ -1,0 +1,105 @@
+services:
+  #----------------------------------------------------------------------------------------------
+  nodeapp:
+    build:
+      context: ./mynode_network
+      dockerfile: Dockerfile
+
+    environment:
+      - MY_VAR_01=123456_DEV
+      - APP_Name=nodeapp
+
+    env_file:
+      - ./mynode_network/.env
+
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+    volumes:
+      - ./mynode_network:/app
+
+    networks:
+      - backend
+      - db-net
+    
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  #----------------------------------------------------------------------------------------------
+  nodeapp-watch:
+    build:
+      context: ./mynode_network
+      dockerfile: Dockerfile
+
+    environment:
+      - MY_VAR_01=123456_DEV
+      - APP_Name=nodeapp-watch
+
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+    develop:
+      watch:
+        - path: ./mynode_network/index.js
+          target: /app/index.js
+          action: sync+restart
+          
+        - path: ./mynode_network 
+          target: /app #Diretório dentro do container onde o código será montado definido no Dockerfile
+          action: sync
+          ignore: 
+            - "./mynode_network/node_modules"
+
+        - path: ./mynode_network/package.json
+          action: rebuild
+
+
+    networks:
+      - backend
+      - db-net
+
+  #----------------------------------------------------------------------------------------------
+  nginx:
+    image: nginx:latest
+
+    ports:
+      - "8080:80"
+      
+    volumes:
+      - ./nginx-html:/usr/share/nginx/html
+    networks:
+      - frontend
+  #----------------------------------------------------------------------------------------------
+  mongo: 
+    image: mongo:latest
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+
+    healthcheck:
+      #test: "exit 0"
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+    volumes:
+       - mongo-data:/data/db
+       #- ./mongo-data:/data/db #Cria um diretório para persistência dos dados do MongoDB
+
+    networks:
+      - db-net
+
+#----------------------------------------------------------------------------------------------
+volumes:
+  mongo-data:
+#----------------------------------------------------------------------------------------------
+
+networks:
+  db-net:
+  backend:
+  frontend:
+
+#----------------------------------------------------------------------------------------------
