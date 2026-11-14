@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Arquivos locais de ambiente
+.env
+.env.*
+!.env.example
+
+# Dependencias e artefatos Node.js
+**/node_modules/
+**/coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dados persistidos localmente pelo MongoDB
+**/mongo-data/
+
+# Backup gerado durante os exemplos
+/3.3-Bind_Mount/backup_host/backup.tar.gz
+
+# Logs e arquivos temporarios
+*.log
+*.tmp

@@ -41,19 +41,17 @@ services:
 
     develop:
       watch:
-        - path: ./mynode_network/index.js
-          target: /app/index.js
-          action: sync+restart
           
         - path: ./mynode_network 
           target: /app #Diretório dentro do container onde o código será montado definido no Dockerfile
-          action: sync
+          action: sync+restart
           ignore: 
-            - "./mynode_network/node_modules"
+            - node_modules/
+            - package-lock.json
+            - package.json
 
         - path: ./mynode_network/package.json
           action: rebuild
-
 
     networks:
       - backend
