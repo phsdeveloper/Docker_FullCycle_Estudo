@@ -1,4 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:11.0
-
+#Aula 04) Determinando um usuário padrão:
 RUN apt update && \
-    apt install -y curl
+    apt install -y curl && \
+    useradd -m -s /bin/bash appuser && \
+    rm -rf /var/lib/apt/lists/*  
+
+
+
